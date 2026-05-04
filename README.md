@@ -1,2 +1,2 @@
 # 3D-Portfolio
-3D personal portfolio using three.js
+Hello everyone ! My name is Flo. I am a passionated UX/UI & XR designer from Enghien, Belgium. I am passionated by designing and developping immersive websites or XR applications.
