@@ -7,6 +7,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 // Renderer setup
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
 // Create a cube
@@ -19,14 +20,14 @@ scene.add(cube);
 // Position the camera
 camera.position.z = 5;
 
-// Rendering scene
-function animate() {
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+// Animate the cube
+function animate(time) {
+  cube.rotation.x = time / 2000;
+  cube.rotation.y = time / 1000;
   renderer.render(scene, camera);
 }
 
-renderer.setAnimationLoop(animate);
+
 
 // Responsive window
 window.addEventListener('resize', () => {
