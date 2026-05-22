@@ -12,7 +12,8 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-camera.position.set(0, 5, 5);
+/*camera start position */
+camera.position.set(0, 1, 5);
 camera.lookAt(0, 0, 0);
 
 /* RENDERER */
@@ -53,7 +54,7 @@ scene.add(ground);
 
 /* SPHERE */
 const sphereGeometry = new THREE.SphereGeometry(1,32,16,0,Math.PI*2,0,Math.PI);
-const sphereMaterial = new THREE.MeshStandardMaterial({color: 0x000000,});
+const sphereMaterial = new THREE.MeshStandardMaterial({color: 0xfda055});
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.position.y = 1;
 sphere.castShadow = true;
@@ -87,22 +88,21 @@ tableRight.position.x = 4.5;
 scene.add(tableRight);
 
 
-
 /* LIGHT */
-const pointLightCam = new THREE.PointLight(0xffffff, 1000);
+const pointLightCam = new THREE.PointLight(0xffffff, 150);
 pointLightCam.position.set(0, 5, 5);
-pointLightCam.castShadow = true;
+pointLightCam.castShadow = false;
 scene.add(pointLightCam);
 
-const pointLightTop = new THREE.PointLight(0xffffff, 600);
+const pointLightTop = new THREE.PointLight(0xffffff, 150);
 pointLightTop.position.set(2, 5, 5);
-pointLightTop.castShadow = true;
+pointLightTop.castShadow = false;
 scene.add(pointLightTop);
 
-const pointLightBack = new THREE.PointLight(0xffffff, 300);
+const pointLightBack = new THREE.PointLight(0xffffff, 150);
 pointLightBack.position.set(-5, 5, -5);
-pointLightBack.castShadow = true;
-scene.add(pointLightBack);
+pointLightBack.castShadow = false;
+scene.add(pointLightBack); 
 
 
 /* MOVEMENT */
@@ -136,12 +136,12 @@ function moveCamera() {
 }
 
 /* ANIMATION LOOP */
-function animate(t = 0) {
+function animate(t = 2) {
   requestAnimationFrame(animate);
 
   moveCamera();
 
-  sphere.rotation.y = t * 0.0001;
+  sphere.position.y = t * 0.0001;
   sphere.rotation.x = t * 0.00005;
 
   controls.update();
