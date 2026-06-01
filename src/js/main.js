@@ -317,7 +317,7 @@ function moveCamera() {
       right.clone().multiplyScalar(speed)
     );
   }
-}
+} 
 
 /* ANIMATION LOOP */
 function animate() {
