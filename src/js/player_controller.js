@@ -1,17 +1,20 @@
 import * as THREE from 'three';
 
-const keys = {};
-const speed = 0.05;
+const app = window.app3D;
 
-function initPlayerController() {
-  const app = window.app3D;
-
-  if (!app || !app.camera || !app.controls) {
-    console.warn('Player controller: camera ou controls introuvable.');
-    return;
-  }
-
+if (!app || !app.camera || !app.controls) {
+  console.warn('Player controller impossible to find.');
+} else {
   const { camera, controls } = app;
+
+  controls.enableRotate = true;
+  controls.enablePan = true;
+  controls.enableZoom = true;
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+
+  const keys = {};
+  const speed = 0.05;
 
   window.addEventListener('keydown', (e) => {
     keys[e.code] = true;
@@ -29,7 +32,7 @@ function initPlayerController() {
     const right = new THREE.Vector3();
     right.crossVectors(forward, camera.up).normalize();
 
-    if (keys['KeyZ']) {
+    if (keys['KeyW']) {
       camera.position.add(forward.clone().multiplyScalar(speed));
       controls.target.add(forward.clone().multiplyScalar(speed));
     }
@@ -39,7 +42,7 @@ function initPlayerController() {
       controls.target.add(forward.clone().multiplyScalar(-speed));
     }
 
-    if (keys['KeyQ']) {
+    if (keys['KeyA']) {
       camera.position.add(right.clone().multiplyScalar(-speed));
       controls.target.add(right.clone().multiplyScalar(-speed));
     }
@@ -54,5 +57,3 @@ function initPlayerController() {
 
   updatePlayerController();
 }
-
-initPlayerController();

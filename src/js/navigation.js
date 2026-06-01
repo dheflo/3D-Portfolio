@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+let currentPosition = new THREE.Vector3();
+
 const anchors = {
   home: {
     position: new THREE.Vector3(2, 1, 5),

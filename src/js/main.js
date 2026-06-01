@@ -16,25 +16,24 @@ const camera = new THREE.PerspectiveCamera(
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({antialias: true});
-
 renderer.setSize(window.innerWidth,window.innerHeight);
-
 renderer.shadowMap.enabled = true;
-
 document.body.appendChild(renderer.domElement);
+
+/* LIGHTS */
+const pointLightCam = new THREE.PointLight(0xffffff,150);
+pointLightCam.position.set(0,5,5);
+scene.add(pointLightCam);
 
 /* CONTROLS */
 const controls = new OrbitControls(camera, renderer.domElement);
-
 controls.enableRotate = false;
 controls.enablePan = false;
 controls.enableZoom = false;
-
 window.app3D = {camera,controls};
 
 /* NAVIGATION */
 initNavigation(camera, controls);
-
 
 /* GROUND */
 const groundGeometry = new THREE.PlaneGeometry(10, 10);
@@ -70,9 +69,7 @@ scene.add(targetFront);
 
 /* TABLE LEFT */
 const tableLeftGeometry = new THREE.BoxGeometry(1,1,3);
-
 const tableLeftMaterial = new THREE.MeshStandardMaterial({color: 0x11db94});
-
 const tableLeft = new THREE.Mesh(tableLeftGeometry,tableLeftMaterial);
 
 tableLeft.receiveShadow = true;
@@ -94,9 +91,7 @@ scene.add(targetLeft);
 
 /* TABLE RIGHT */
 const tableRightGeometry = new THREE.BoxGeometry(1,1,3);
-
 const tableRightMaterial = new THREE.MeshStandardMaterial({color: 0x11db94});
-
 const tableRight = new THREE.Mesh(tableRightGeometry,tableRightMaterial);
 
 tableRight.receiveShadow = true;
@@ -116,35 +111,11 @@ targetRight.position.x = 4.5;
 
 scene.add(targetRight);
 
-/* LIGHTS */
-const pointLightCam =
-  new THREE.PointLight(0xffffff,150);
-
-pointLightCam.position.set(0,5,5);
-
-scene.add(pointLightCam);
-
-const pointLightTop = new THREE.PointLight(0xffffff,150);
-
-pointLightTop.position.set(2,5,5);
-
-scene.add(pointLightTop);
-
-const pointLightBack = new THREE.PointLight(0xffffff, 150);
-
-pointLightBack.position.set(-5,5,-5);
-
-scene.add(pointLightBack);
-
 /* ANIMATION LOOP */
 function animate() {
-
   requestAnimationFrame(animate);
-
   updateNavigation();
-
   controls.update();
-
   renderer.render(scene,camera);
 }
 
