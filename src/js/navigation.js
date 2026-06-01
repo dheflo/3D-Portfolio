@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const viewpoints = {
+const anchors = {
   home: {
     position: new THREE.Vector3(2, 1, 5),
     target: new THREE.Vector3(0, 1, 0)
@@ -32,8 +32,8 @@ export function initNavigation(cameraParam, controlsParam) {
   camera = cameraParam;
   controls = controlsParam;
 
-  camera.position.copy(viewpoints.home.position);
-  controls.target.copy(viewpoints.home.target);
+  camera.position.copy(anchors.home.position);
+  controls.target.copy(anchors.home.target);
   controls.update();
 
   document.getElementById('home').addEventListener('click', () => {
@@ -54,7 +54,7 @@ export function initNavigation(cameraParam, controlsParam) {
 }
 
 export function goToViewpoint(name) {
-  currentViewpoint = viewpoints[name];
+  currentViewpoint = anchors[name];
 }
 
 export function updateNavigation() {
