@@ -14,7 +14,29 @@ const camera = new THREE.PerspectiveCamera(
 
 /*camera start position */
 camera.position.set(0, 1, 5);
-camera.lookAt(0, 0, 0);
+//camera.lookAt(0, 0, 0);
+
+/* ANCHORS */
+const anchors = {
+  home : {
+    position: new THREE.Vector3(2,1,5),
+    target: new THREE.Vector3(0,1,0)
+  },
+  uxui :
+  {
+    position: new THREE.Vector3(0.1, 1.4, -3.8),
+    target : new THREE.Vector3(0, 1.25,-4.5)
+  },
+  work : {
+    position : new THREE.Vector3(-3.1, 1.6, 0.3),
+    target : new THREE.Vector3(-4.2, 1.3,0)
+  },
+  about :
+  {
+    position : new THREE.Vector3(-3.7, 2.2, -0.01),
+    target : new THREE.Vector3(-4.2, 1.3, 0)
+  }
+}
 
 /* RENDERER */
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -24,7 +46,7 @@ document.body.appendChild(renderer.domElement);
 
 /* CONTROLS */
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 0, 0);
+//controls.target.set(0, 0, 0);
 
 /* KEYBOARD */
 const keys = {};
@@ -51,15 +73,6 @@ ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
 scene.add(ground);
 
-
-/* SPHERE */
-const sphereGeometry = new THREE.SphereGeometry(1,32,16,0,Math.PI*2,0,Math.PI);
-const sphereMaterial = new THREE.MeshStandardMaterial({color: 0xfda055});
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-sphere.position.y = 1;
-sphere.castShadow = true;
-scene.add(sphere);
-
 /* Table front */
 const tableFrontGeometry = new THREE.BoxGeometry(3,1,1);
 const tableFrontMaterial = new THREE.MeshStandardMaterial({color: 0x11db94});
@@ -68,6 +81,16 @@ tableFront.receiveShadow = true;
 tableFront.position.y = 0.5;
 tableFront.position.z = -4.5;
 scene.add(tableFront);
+
+/* Target front */
+const targetFrontGeometry = new THREE.BoxGeometry(0.5,0.5,0.5);
+const targetFrontMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+const targetFront = new THREE.Mesh(targetFrontGeometry,targetFrontMaterial);
+targetFront.receiveShadow = true;
+targetFront.position.y = 1.25;
+targetFront.position.z = -4.5;
+console.log(targetFront.position);
+scene.add(targetFront);
 
 /* Table left */
 const tableLeftGeometry = new THREE.BoxGeometry(1,1,3);
@@ -78,6 +101,16 @@ tableLeft.position.y = 0.5;
 tableLeft.position.x = -4.5;
 scene.add(tableLeft);
 
+/* Target left */
+const targetLeftGeometry = new THREE.BoxGeometry(0.5,0.5,0.5);
+const targetLeftMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+const targetLeft = new THREE.Mesh(targetLeftGeometry,targetLeftMaterial);
+targetLeft.receiveShadow = true;
+targetLeft.position.y = 1.25;
+targetLeft.position.x = -4.5;
+console.log(targetLeft.position)
+scene.add(targetLeft);
+
 /* Table right */
 const tableRightGeometry = new THREE.BoxGeometry(1,1,3);
 const tableRightMaterial = new THREE.MeshStandardMaterial({color: 0x11db94});
@@ -86,6 +119,17 @@ tableRight.receiveShadow = true;
 tableRight.position.y = 0.5;
 tableRight.position.x = 4.5;
 scene.add(tableRight);
+
+/* Target right */
+const targetRightGeometry = new THREE.BoxGeometry(0.5,0.5,0.5);
+const targetRightMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+const targetRight = new THREE.Mesh(targetRightGeometry,targetRightMaterial);
+targetRight.receiveShadow = true;
+targetRight.position.y = 1.25;
+targetRight.position.x = 4.5;
+console.log(targetRight.position)
+scene.add(targetRight);
+
 
 
 /* LIGHT */
@@ -140,12 +184,32 @@ function animate(t = 2) {
   requestAnimationFrame(animate);
 
   moveCamera();
-
-  sphere.position.y = t * 0.0001;
-  sphere.rotation.x = t * 0.00005;
-
+  //console.log(camera.position)
   controls.update();
   renderer.render(scene, camera);
 }
+animate()
 
-animate();
+/* CAMERA MOVE WITH NAV ANCHORS*/
+document.getElementById('home').addEventListener('click', () => {
+    camera.position.copy(anchors.home.position);
+    controls.target.copy(anchors.home.target);
+  });
+
+document.getElementById('uxui').addEventListener('click', () => {
+    camera.position.copy(anchors.uxui.position);
+    controls.target.copy(anchors.uxui.target);
+    controls.update();
+  });
+
+  document.getElementById('about').addEventListener('click', () => {
+    camera.position.copy(anchors.about.position);
+    controls.target.copy(anchors.about.target);
+    controls.update();
+  });
+
+    document.getElementById('work').addEventListener('click', () => {
+    camera.position.copy(anchors.work.position);
+    controls.target.copy(anchors.work.target);
+    controls.update();
+  });
