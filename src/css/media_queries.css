@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+    .container_header {
+      padding: 16px;
+    }
+  
+    .nav {
+      gap: 12px;
+      font-size: 14px;
+    }
+  }
