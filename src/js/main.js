@@ -48,6 +48,9 @@ window.app3D = { camera, controls };
 /* NAVIGATION */
 initNavigation(camera, controls);
 
+/* VARIABLES */
+var modal = document.getElementById("modal");
+var button = document.getElementById("modal_close");
 
 /* GROUND */
 const groundGeometry = new THREE.PlaneGeometry(10, 10);
@@ -157,5 +160,10 @@ window.addEventListener("click", (e) => {
   if (intersects.length > 0) {
     const object = intersects[0].object;
     console.log(object.name + " is clicked");
+    modal.style.display = "block";
   }
+
+    button.onclick = function() {
+    modal.style.display = "none";
+    }
 });
