@@ -35,7 +35,7 @@ document.body.appendChild(renderer.domElement);
 
 /* LIGHTS */
 const pointLightCam = new THREE.PointLight(0xffffff, 150);
-pointLightCam.position.set(0, 5, 5);
+pointLightCam.position.set(0, 5, 2);
 scene.add(pointLightCam);
 
 /* CONTROLS */
@@ -81,8 +81,21 @@ const targetFront = new THREE.Mesh(targetFrontGeometry, targetFrontMaterial);
 targetFront.receiveShadow = true;
 targetFront.position.y = 1.25;
 targetFront.position.z = -4.5;
+targetFront.position.x = -0.25;
 
 scene.add(targetFront);
+
+/* CUBE FRONT_2 */
+const targetFrontGeometry_2 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const targetFrontMaterial_2 = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const targetFront_2 = new THREE.Mesh(targetFrontGeometry_2, targetFrontMaterial_2);
+
+targetFront_2.receiveShadow = true;
+targetFront_2.position.y = 1.25;
+targetFront_2.position.z = -4.5;
+targetFront_2.position.x = 0.4;
+
+scene.add(targetFront_2);
 
 /* TABLE LEFT */
 const tableLeftGeometry = new THREE.BoxGeometry(1, 1, 3);
@@ -141,9 +154,9 @@ animate();
 
 /* Event On Click on Cubes */
 
-targetLeft.name = "CubeLeft";
-targetRight.name = "CubeRight";
-targetFront.name = "CubeFront";
+//targetLeft.name = "CubeLeft";
+//targetRight.name = "CubeRight";
+//targetFront.name = "CubeFront";
 
 window.addEventListener("click", (e) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -155,15 +168,16 @@ window.addEventListener("click", (e) => {
     targetLeft,
     targetRight,
     targetFront,
+    targetFront_2,
   ]);
 
   if (intersects.length > 0) {
     const object = intersects[0].object;
-    console.log(object.name + " is clicked");
+    //console.log(object.name + " is clicked");
     modal.style.display = "block";
-  }
 
     button.onclick = function() {
     modal.style.display = "none";
-    }
+    } 
+  }
 });

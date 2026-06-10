@@ -1,7 +1,11 @@
 import * as THREE from 'three';
 
 let currentPosition = new THREE.Vector3();
+let camera = null;
+let controls = null;
+let currentViewpoint = null;
 
+const animationSpeed = 0.04;
 const anchors = {
   home: {
     position: new THREE.Vector3(2, 1, 5),
@@ -9,13 +13,18 @@ const anchors = {
   },
 
   uxui: {
-    position: new THREE.Vector3(0.1, 1.4, -3.8),
+    position: new THREE.Vector3(-0.1, 1.4, -3.8),
     target: new THREE.Vector3(0, 1.25, -4.5)
   },
 
+   uxui2: {
+    position: new THREE.Vector3(0.5, 1.4, -3.8),
+    target: new THREE.Vector3(0.5, 1.25, -4.5)
+  },
+
   work: {
-    position: new THREE.Vector3(3.1, 1.6, 0.3),
-    target: new THREE.Vector3(4.2, 1.6, 0)
+    position: new THREE.Vector3(3.5, 1.5, 0.3),
+    target: new THREE.Vector3(5.5, 1.5, 0)
   },
 
   about: {
@@ -24,11 +33,7 @@ const anchors = {
   }
 };
 
-let camera = null;
-let controls = null;
-let currentViewpoint = null;
 
-const animationSpeed = 0.04;
 
 export function initNavigation(cameraParam, controlsParam) {
   camera = cameraParam;
@@ -46,6 +51,10 @@ export function initNavigation(cameraParam, controlsParam) {
     goToViewpoint('uxui');
   });
 
+   document.getElementById('uxui2').addEventListener('click', () => {
+    goToViewpoint('uxui2');
+  });
+
   document.getElementById('work').addEventListener('click', () => {
     goToViewpoint('work');
   });
@@ -60,8 +69,8 @@ export function goToViewpoint(name) {
 }
 
 export function updateNavigation() {
-  if (!currentViewpoint) return;
-
+  if (!currentViewpoint)
+    return;
   camera.position.lerp(currentViewpoint.position, animationSpeed);
   controls.target.lerp(currentViewpoint.target, animationSpeed);
 
